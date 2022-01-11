@@ -1,0 +1,313 @@
+.card {
+    border-radius: 10px;
+    width: auto;
+    position: relative;
+
+    .fa-pen {
+        position: absolute;
+        
+        cursor: pointer;
+        top: 150px;
+        right: 40px;
+        //border: 1px solid gray;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .fa-pen:hover {
+        background-size: 45px 45px;
+        background-color: rgb(226, 226, 226);
+        -webkit-transition: all 0.5s ease 0s;
+        -moz-transition: all 0.5s ease 0s;
+        -o-transition: all 0.5s ease 0s;
+        transition: all 0.5s ease 0s;
+    }
+    
+
+    .card-img {
+        width: 100%!important;
+        height: 150px!important;
+        object-fit: none;
+    }
+    
+    .profile-img-content:hover {
+        opacity: 0.7;
+        -webkit-transition: all 0.5s ease 0s;
+        -moz-transition: all 0.5s ease 0s;
+        -o-transition: all 0.5s ease 0s;
+        transition: all 0.5s ease 0s;
+
+        .thumbnail {
+
+            svg {
+                opacity: 0.7;
+                -webkit-transition: all 0.5s ease 0s;
+                -moz-transition: all 0.5s ease 0s;
+                -o-transition: all 0.5s ease 0s;
+                transition: all 0.5s ease 0s;
+                z-index: 3;
+                pointer-events: none;
+                cursor: pointer;
+            }
+        }
+        
+    }
+    .profile-img-content {
+        position: absolute;
+        margin-left: 20px;
+        margin-top: 70px;
+        cursor: pointer;
+
+        .thumbnail {
+
+            position: relative;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 50%; 
+            margin: 15px auto;
+            border: 3px solid white;
+            .hidden-file-input {
+                position: absolute;
+                border-radius: 50%;
+                width: 95px;
+                height: 95px;
+                cursor: pointer;
+                margin-top: 5px;
+                margin-left: 5px;
+                //z-index: 4;
+                opacity: 0;
+            }
+            svg{
+                position: absolute;
+                z-index: 3;
+                opacity: 0;
+                margin-top: 30px;
+                margin-left: 30px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            img {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                height: 100%;
+                width: auto;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    .profile-desc {
+
+        span {
+            display: block;
+        }
+        .name {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .position {
+            font-size: 18px;
+            font-weight: 400;
+        }
+        .location {
+            font-size: 16px;
+            font-weight: 300;
+            color: gray;
+
+            .iletisim {
+                font-weight: 600;
+            }
+        }
+        .network {
+
+            a {
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+
+        .buttons {
+            margin-top: 10px;
+            button {
+                font-size: 14px;
+                font-weight: 800;
+                width: 100%;
+                border-radius: 25px;
+                height: 40px;
+                //border: 1px solid rgb(65, 132, 255);
+                //color: rgb(65, 132, 255);
+                //background-color: white;
+                margin-left: 1px;
+                margin-right: 7px;
+                -webkit-transition: all 0.5s ease 0s;
+                -moz-transition: all 0.5s ease 0s;
+                -o-transition: all 0.5s ease 0s;
+                transition: all 0.5s ease 0s;
+            }
+            .open-btn {
+                background-color: #0967c2;
+                color: white;
+                border: 1px solid #0967c2;
+            }
+            .open-btn:hover {
+               background-color: rgb(8, 59, 153);
+            }
+            .add-sec-btn {
+                //border-color: rgb(172, 172, 172);
+                border: 1px solid #7f7f7f;
+                color: #7f7f7f;
+                background-color: white;
+                width: 400px;
+            }
+            .add-sec-btn:hover {
+                border: 1px solid rgb(105, 105, 105);
+                color: rgb(105, 105, 105);
+                background-color: rgb(223, 223, 223);
+            }
+            .more-btn {
+                border: 1px solid #7f7f7f;
+                color: #7f7f7f;
+                background-color: white;
+                width: 400px;
+            }
+            .more-btn:hover {
+                border: 1px solid rgb(105, 105, 105);
+                color: rgb(105, 105, 105);
+                background-color: rgb(223, 223, 223);
+            }
+        }
+    }
+}
+
+.modal-body {
+
+    .profile-img-content {
+        position: relative;
+        margin-left: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+
+        .thumbnail {
+
+            position: relative;
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 50%; 
+            margin: 15px auto;
+            border: 1px solid white;
+
+            img {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                height: 100%;
+                width: auto;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+.lang-card {
+
+    .buttons {
+        margin-top: 10px;
+            button {
+                font-size: 14px;
+                font-weight: 800;
+                width: 100%;
+                border-radius: 25px;
+                height: 30px;
+                width: 80px;
+                //border: 1px solid rgb(65, 132, 255);
+                //color: rgb(65, 132, 255);
+                //background-color: white;
+                margin-left: 1px;
+                margin-right: 7px;
+                -webkit-transition: all 0.5s ease 0s;
+                -moz-transition: all 0.5s ease 0s;
+                -o-transition: all 0.5s ease 0s;
+                transition: all 0.5s ease 0s;
+            }
+            .btn-tr {
+                background-color: #0967c2;
+                color: white;
+                border: 1px solid #0967c2;
+            }
+            .btn-tr:hover {
+                background-color: rgb(8, 59, 153);
+            }
+            .btn-eng {
+                border: 1px solid #7f7f7f;
+                color: #7f7f7f;
+                background-color: white;
+                width: 400px;
+            }
+            .btn-eng:hover {
+                border: 1px solid rgb(105, 105, 105);
+                color: rgb(105, 105, 105);
+                background-color: rgb(223, 223, 223);
+            }
+            svg {
+                fill: gray;
+                top: 25px;
+                right: 5px;
+                position: absolute;
+                cursor: pointer;
+            }
+    }
+    a {
+        font-size: 16px;
+        font-weight: 500;
+        color: gray;
+    }
+    .fa-circle-question {
+        fill: gray;
+        position: absolute;
+        cursor: pointer;
+        top: 15px;
+        right: -22px;
+    }
+}
+.ad-card {
+    //width: 300px !important;
+    .card-img {
+        // width: 300px;
+        // height: 150px!important;
+        object-fit: scale-down;
+    }
+}
+
+
+
+// .bg-img-content {
+
+//     width: 100px;
+//     height: 100%;
+//     background-color: white;
+
+//     .thumbnail {
+//         position: relative;
+//         width: 60px;
+//         height: 60px;
+//         overflow: hidden;
+//         //border-radius: 50%; 
+//         margin: 15px auto;
+//         img {
+//             position: absolute;
+//             left: 50%;
+//             top: 50%;
+//             height: 100%;
+//             width: auto;
+//             -webkit-transform: translate(-50%, -50%);
+//             -ms-transform: translate(-50%, -50%);
+//             transform: translate(-50%, -50%);
+//         }
+//     }
+// }
