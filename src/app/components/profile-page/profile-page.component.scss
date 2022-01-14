@@ -3,24 +3,11 @@
     width: auto;
     position: relative;
 
-    .fa-pen {
+    .btn-svg {
         position: absolute;
-        
-        cursor: pointer;
         top: 150px;
         right: 40px;
-        //border: 1px solid gray;
         border-radius: 50%;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-    .fa-pen:hover {
-        background-size: 45px 45px;
-        background-color: rgb(226, 226, 226);
-        -webkit-transition: all 0.5s ease 0s;
-        -moz-transition: all 0.5s ease 0s;
-        -o-transition: all 0.5s ease 0s;
-        transition: all 0.5s ease 0s;
     }
     
 
@@ -47,7 +34,6 @@
                 transition: all 0.5s ease 0s;
                 z-index: 3;
                 pointer-events: none;
-                cursor: pointer;
             }
         }
         
@@ -259,7 +245,6 @@
                 top: 25px;
                 right: 5px;
                 position: absolute;
-                cursor: pointer;
             }
     }
     a {
@@ -270,7 +255,6 @@
     .fa-circle-question {
         fill: gray;
         position: absolute;
-        cursor: pointer;
         top: 15px;
         right: -22px;
     }
@@ -278,13 +262,228 @@
 .ad-card {
     //width: 300px !important;
     .card-img {
-        // width: 300px;
-        // height: 150px!important;
         object-fit: scale-down;
     }
 }
+.experiences-card {
+    border-radius: 10px 10px 0 0;
+    border-bottom: 0;
 
+    .card-header {
+        background-color: white;
+        border-radius: 10px 10px 0 0;
+        border-bottom: 0;
+        position: relative;
 
+        .btn-svg {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            svg {
+                
+            }
+
+        }
+    
+    }
+    .card-body {
+        padding-top: 0px;
+        .company-content {
+            display: flex;
+            position: relative;
+            .logo {
+                position: relative;
+                svg {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    -ms-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+                }
+            }
+            a {
+                margin-left: 20px;
+                color: black;
+                .words {
+                    span {
+                        display: block;
+                        //letter-spacing: 1px;
+                    }
+                    display: block;
+                    margin-left: 20px;
+                    .title {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+                    .company-typeOfEmp {
+                        font-size: 14px;
+                        font-weight: 400;
+                    }
+                    .dates, .locations {
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: gray;
+                    }
+                    
+                }
+            }
+            button {
+                position: absolute;
+                top: 10px;
+                right: 0px;
+                border-radius: 50%;
+
+                svg {
+                    
+                }
+            }
+            
+        }
+    }
+}
+.education-card {
+
+    border-radius: 0 0 10px 10px;
+
+    .card-header {
+        background-color: white;
+        border-bottom: 0;
+        position: relative;
+
+        .btn-svg {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            svg {
+            
+            }
+            
+        }
+        
+    }
+    .card-body {
+        padding-top: 1px;
+        .company-content {
+            display: flex;
+            .logo {
+                position: relative;
+                svg {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    -ms-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+                }
+            }
+            a {
+                margin-left: 20px;
+                color: black;
+                .words {
+                    span {
+                        display: block;
+                        //letter-spacing: 1px;
+                    }
+                    display: block;
+                    margin-left: 20px;
+                    .title {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+                    .company-typeOfEmp {
+                        font-size: 14px;
+                        font-weight: 400;
+                    }
+                    .dates, .locations {
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: gray;
+                    }
+                    
+                }
+            }
+            
+        }
+    }
+}
+
+svg {
+    cursor: pointer;
+}
+
+.btn-svg {
+    border: 0;
+    border-radius: 50%;
+    background-color: white;
+    height: 40px;
+    width: 40px;
+    padding-bottom: 5px;
+    svg {
+        //align-items: center;
+        
+    }
+}
+.btn-svg:hover {
+    background-color: rgb(233, 233, 233);
+    -webkit-transition: all 0.5s ease 0s;
+    -moz-transition: all 0.5s ease 0s;
+    -o-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+}
+
+.modal-experience {
+
+    .modal-header {
+
+    }
+    .modal-body {
+        max-height: 480px;
+        overflow-y: auto;
+        span{
+            display: block;
+            color: gray;
+            font-size: 14px;
+        }
+        .custom-select {
+            width: 100%;
+            
+        }
+        .inp-form {
+            width: 100%;
+            font-size: 16px;
+        }
+        select {
+            font-size: 14px;
+        }
+        .year-month {
+            display: flex;
+            //font-size: 16px;
+
+            .year {
+                width: 50%;
+            }
+            .month {
+                width: 50%;
+            }
+        }
+    }
+    .modal-footer {
+        .del-exp-btn {
+            margin-right: 50px;
+            color: gray;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .del-exp-btn:hover {
+            background-color: rgb(230, 230, 230);
+            -webkit-transition: all 0.5s ease 0s;
+            -moz-transition: all 0.5s ease 0s;
+            -o-transition: all 0.5s ease 0s;
+            transition: all 0.5s ease 0s;
+        }
+    }
+}
 
 // .bg-img-content {
 
