@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfilePicService } from 'src/app/services/profile-pic.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UserModel, UserExperiences } from 'src/app/models/user.model';
+import { UserModel, UserExperiences, UserEducations } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-profile-page',
@@ -23,14 +23,24 @@ export class ProfilePageComponent implements OnInit {
   //user = new UserModel();
   istihdam = ["Tam zamanlı", "Yarı zamanlı", "Freelancer", "Kendi İşim"];
   months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-  years = ["2021", "2020", "2019", "2018", "2017", "2016", "2015"]
+  years = ["2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009"]
 
   selectedYear!: string;
 
 
   userExpArr = this.user.experiences;
+  userEducArr = this.user.educations;
+
   theUserExpItem!: UserExperiences;
+  thePrevUserExpItem!: UserExperiences;
   theNewUserExpItem!: UserExperiences;
+
+  theUserEducItem!: UserEducations;
+  thePrevUserEducItem!: UserEducations;
+  theNewUserEducItem!: UserEducations;
+
+
+
   name = this.profileService.user.name;
   school = this.profileService.user.school;
   profession = this.profileService.user.profession;
@@ -44,7 +54,9 @@ export class ProfilePageComponent implements OnInit {
   ) {
     //console.log(this.userExpArr);
     console.log("aaaa");
-    
+    console.log(this.userExpArr);
+
+
     //theUserExpItem: UserExperiences;
 
   }
@@ -54,11 +66,17 @@ export class ProfilePageComponent implements OnInit {
   selectedEndedAtMonth!: string; //this.theUserExpItem.ended_at_month;
   selectedEndedAtYear!: string; //this.theUserExpItem.ended_at_year
 
+  selectedTypeOfEmp!: string;
+
+  selectedStartedAtMonth_ed!: string; //this.theUserExpItem.started_at_month;
+  selectedStartedAtYear_ed!: string; //this.theUserExpItem.started_at_year;
+  selectedEndedAtMonth_ed!: string; //this.theUserExpItem.ended_at_month;
+  selectedEndedAtYear_ed!: string;
 
 
   ngOnInit(): void {
     this.profileService.currentBase64.subscribe(theStr => this.base64string = theStr)
-    
+
   }
 
 
@@ -112,47 +130,128 @@ export class ProfilePageComponent implements OnInit {
     new_ended_at_year: ''
   }
 
+  newEducAttr = {
+    new_school_name: '',
+    new_degree: '',
+    new_departman: '',
+    new_started_at_year: '',
+    new_started_at_month: '',
+    new_ended_at_month: '',
+    new_ended_at_year: '',
+  }
+
+  openModalEducForUpd(content: any, i: UserEducations) {
+    this.isEditEduc = true;
+
+    this.profileService.changeEaMed(i.ended_at_month as string);
+    this.profileService.changeEaYed(i.ended_at_year as string);
+    this.profileService.changeSaMed(i.started_at_month as string);
+    this.profileService.changeSaYed(i.started_at_year as string);
+
+    this.modalReference = this.modalService.open(content);
+
+    this.selectedEndedAtMonth_ed = this.profileService.eamValueEd;
+    this.selectedEndedAtYear_ed = this.profileService.eayValueEd;
+    this.selectedStartedAtMonth_ed = this.profileService.samValueEd;
+    this.selectedStartedAtYear_ed = this.profileService.sayValueEd;
+
+    this.modalReference.result.then((data: any) => {
+      this.isEditEduc = false
+    },
+      (error: any) => {
+        this.isEditEduc = false
+      }
+    )
+    this.theUserEducItem = i;
+    //this.thePrevUserEducItem = i;
+
+
+  }
+
   openModalExpForUpd(content: any, i: UserExperiences) {
     this.isEditExp = true;
     console.log(i.ended_at_month);
-    
+
     this.profileService.changeEaM(i.ended_at_month as string);
     this.profileService.changeEaY(i.ended_at_year as string);
     this.profileService.changeSaM(i.started_at_month as string);
     this.profileService.changeSaY(i.started_at_year as string);
-    
+
     this.modalReference = this.modalService.open(content);
     //this.profileService.current_e_a_month.subscribe(str => this.selectedEndedAtMonth = str)
     this.selectedEndedAtMonth = this.profileService.eamValue
     this.selectedStartedAtYear = this.profileService.sayValue
     this.selectedEndedAtYear = this.profileService.eayValue;
     this.selectedStartedAtYear = this.profileService.sayValue;
+    this.selectedTypeOfEmp = i.type_of_employment!;
     //modalRef.componentInstance.user = this.userExpArr
     console.log(this.profileService.sayValue);
     this.modalReference.result.then((data: any) => {
       this.isEditExp = false
-       
+
     },
       (error: any) => {
         this.isEditExp = false
       })
     this.theUserExpItem = i;
+    this.thePrevUserExpItem = i;
     console.log(this.theUserExpItem);
 
   }
   createNewExp() {
     const newExp: any = {
-      new_title: this.newExpAttr.new_title,
-      new_type_pf_employement: this.newExpAttr.new_type_of_employment,
-      new_company_name: this.newExpAttr.new_company_name,
-      new_co_location_city: this.newExpAttr.new_co_location_city,
-      new_co_location_nation: this.newExpAttr.new_co_location_nation,
-      new_started_at_year: this.newExpAttr.new_started_at_year,
-      new_started_at_month: this.newExpAttr.new_started_at_month,
-      new_ended_at_year: this.newExpAttr.new_ended_at_year,
-      new_ended_at_month: this.newExpAttr.new_ended_at_month
+      title: this.newExpAttr.new_title,
+      type_of_employement: this.newExpAttr.new_type_of_employment,
+      company_name: this.newExpAttr.new_company_name,
+      co_location_city: this.newExpAttr.new_co_location_city,
+      co_location_nation: this.newExpAttr.new_co_location_nation,
+      started_at_year: this.newExpAttr.new_started_at_year,
+      started_at_month: this.newExpAttr.new_started_at_month,
+      ended_at_year: this.newExpAttr.new_ended_at_year,
+      ended_at_month: this.newExpAttr.new_ended_at_month
     };
     this.userExpArr?.push(newExp);
+
+    this.newExpAttr.new_title = '';
+    this.newExpAttr.new_company_name = ''
+    this.newExpAttr.new_type_of_employment = '';
+    this.newExpAttr.new_co_location_city = '';
+    this.newExpAttr.new_co_location_nation = '';
+    this.newExpAttr.new_ended_at_month = '';
+    this.newExpAttr.new_ended_at_year = '';
+    this.newExpAttr.new_started_at_month = '';
+    this.newExpAttr.new_started_at_year = '';
+  }
+
+  createNewEduc() {
+    const newEduc: any = {
+      school_name: this.newEducAttr.new_school_name,
+      degree: this.newEducAttr.new_degree,
+      departman: this.newEducAttr.new_departman,
+      started_at_month: this.newEducAttr.new_started_at_month,
+      started_at_year: this.newEducAttr.new_started_at_year,
+      ended_at_month: this.newEducAttr.new_ended_at_month,
+      ended_at_year: this.newEducAttr.new_ended_at_year
+    };
+    this.userEducArr?.push(newEduc)
+    this.newEducAttr.new_school_name = '';
+    this.newEducAttr.new_degree = '';
+    this.newEducAttr.new_departman = '';
+    this.newEducAttr.new_ended_at_month = '';
+    this.newEducAttr.new_ended_at_year = '';
+    this.newEducAttr.new_started_at_month = '';
+    this.newEducAttr.new_started_at_year = '';
+  }
+
+  deleteExperience(i: any) {
+    console.log(i);
+    
+    this.userExpArr = this.userExpArr?.filter(item => i.id !== item.id)
+    this.modalService.dismissAll();
+  }
+  deleteEducation(i: any) {
+    this.userEducArr = this.userEducArr?.filter(item => i.id !== item.id)
+    this.modalService.dismissAll();
   }
 
   openExpAddModal() {
@@ -194,5 +293,22 @@ export class ProfilePageComponent implements OnInit {
     //   this.theUserExpItem.company_name = item.company_name
     // }
     this.isEditExp == false
+  }
+  
+  theId!: number;
+  theObj: any;
+
+  cancelEducModal(i: UserEducations) {
+    this.isEditEduc == false
+    //this.thePrevUserEducItem = this.profileService.user.educations?.filter(item => item.id == i.id) as Object;
+    // this.theId = i.id as number;
+    // console.log(i);
+    
+    // this.theObj = this.profileService.user.educations?.filter(item => item.id === i.id);
+    // console.log(this.theObj);
+    
+    // this.theUserEducItem.school_name = this.theItem.school_name
+    // this.theUserEducItem.degree = i.degree as string
+    // console.log(this.theUserEducItem);
   }
 }

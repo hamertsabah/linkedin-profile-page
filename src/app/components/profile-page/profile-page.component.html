@@ -77,7 +77,9 @@
                                         <span class="title">{{item.title}}</span>
                                         <span class="company-typeOfEmp"> {{item.company_name}} ·
                                             {{item.type_of_employment}}</span>
-                                        <span class="dates">{{ item.started_at_month | slice:0:3 }} {{item.started_at_year}} - {{item.ended_at_month | slice:0:3}} {{item.ended_at_year}} </span>
+                                        <span class="dates">{{ item.started_at_month | slice:0:3 }}
+                                            {{item.started_at_year}} - {{item.ended_at_month | slice:0:3}}
+                                            {{item.ended_at_year}} </span>
                                         <span class="locations">{{item.co_location_city}},
                                             {{item.co_location_nation}}</span>
                                     </div>
@@ -106,6 +108,34 @@
                             </button>
                         </div>
                         <div class="card-body">
+                            <div class="school-content mt-2" *ngFor="let item of userEducArr">
+                                <div class="logo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="gray"
+                                        class="bi bi-google" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                                    </svg>
+                                </div>
+                                <a href="">
+                                    <div class="words">
+                                        <span class="title">{{item.school_name}}</span>
+                                        <span class="degree-departman"> {{item.degree}},
+                                            {{item.departman}}</span>
+                                        <span class="dates">{{ item.started_at_month | slice:0:3 }}
+                                            {{item.started_at_year}} - {{item.ended_at_month | slice:0:3}}
+                                            {{item.ended_at_year}} </span>
+                                    </div>
+                                </a>
+                                <button class="btn-svg" (click)="openModalEducForUpd(modalEducation,item)">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen"
+                                        class="svg-inline--fa fa-pen" role="img" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="-92 -92 720 720" width="30px" height="30px">
+                                        <path fill="gray"
+                                            d="M497.9 74.16L437.8 14.06c-18.75-18.75-49.19-18.75-67.93 0l-56.53 56.55l127.1 128l56.56-56.55C516.7 123.3 516.7 92.91 497.9 74.16zM290.8 93.23l-259.7 259.7c-2.234 2.234-3.755 5.078-4.376 8.176l-26.34 131.7C-1.921 504 7.95 513.9 19.15 511.7l131.7-26.34c3.098-.6191 5.941-2.141 8.175-4.373l259.7-259.7L290.8 93.23z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
                             <!-- <div class="company-content mt-2" *ngFor="let item of userExpArr">
                                 <div class="logo">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="gray" class="bi bi-google" viewBox="0 0 16 16">
@@ -261,15 +291,17 @@
                 <span class="span-form" style="margin-right: 100px;">İstihdam Türü </span>
                 <!-- <input *ngIf="!isEditExp" class="inp-form" type="text" name="school" id="" [(ngModel)]="newExpAttr.new_type_of_employment">
                 <input *ngIf="isEditExp" class="inp-form" type="text" name="name" id="" [(ngModel)]="theUserExpItem.type_of_employment"> -->
-                <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01">
-                    <option selected>Lütfen Seçin</option>
-                    <option selected> {{ theUserExpItem.type_of_employment }}</option>
-                    <option ngDefaultControl *ngFor="let is of istihdam" value="is" [(ngModel)]="newExpAttr.new_type_of_employment">{{is}}</option>
+                <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01"
+                    [(ngModel)]="newExpAttr.new_type_of_employment">
+                    <option>Lütfen Seçin</option>
+                    <option selected> {{ newExpAttr.new_type_of_employment }}</option>
+                    <option ngDefaultControl *ngFor="let is of istihdam" value="{{is}}">{{is}}</option>
                 </select>
-                <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01">
-                    <option selected>Lütfen Seçin</option>
-                    <option selected> {{ theUserExpItem.type_of_employment }}</option>
-                    <option ngDefaultControl *ngFor="let is of istihdam" value="is" [(ngModel)]="newExpAttr.new_type_of_employment">{{is}}</option>
+                <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01" [value]="selectedTypeOfEmp"
+                    [(ngModel)]="theUserExpItem.type_of_employment">
+                    <!-- <option>Lütfen Seçin</option> -->
+                    <!-- <option selected> {{ theUserExpItem.type_of_employment }}</option> -->
+                    <option ngDefaultControl *ngFor="let is of istihdam" value="{{is}}">{{is}}</option>
                 </select>
             </div>
             <div class="input-group input-group-sm mb-3 d-block">
@@ -297,27 +329,31 @@
                 <span class="span-form d-block">Başlangıç Tarihi</span>
                 <div class="d-flex">
                     <div class="month d-flex">
-                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newExpAttr.new_started_at_month">
                             <option selected>Ay</option>
                             <!-- <option *ngIf="isEditExp" selected> </option> -->
-                            <option *ngFor="let m of months" name="sam" ngDeafultControl value="m">{{m}}</option>
+                            <option *ngFor="let m of months" name="sam" ngDeafultControl value="{{m}}">{{m}}</option>
                         </select>
-                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedStartedAtMonth" [(ngModel)]="theUserExpItem.started_at_month">
                             <!-- <option *ngIf="isEditExp" selected> </option> -->
-                            <option selected>Ay</option>
-                            <option ngDefaultControl name="sam1" *ngFor="let m of months" [(ngModel)]="selectedStartedAtMonth" [selected]="selectedStartedAtMonth">{{m}}</option>
+                            <!-- <option selected>Ay</option> -->
+                            <option ngDefaultControl name="sam1" *ngFor="let m of months" value="{{m}}">{{m}}</option>
                         </select>
                     </div>
                     <div class="year d-flex">
-                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newExpAttr.new_started_at_year">
                             <option selected>Yıl</option>
                             <option *ngIf="isEditExp" selected> </option>
-                            <option ngDefaultControl name="say" *ngFor="let y of years" value="is">{{y}}</option>
+                            <option ngDefaultControl name="say" *ngFor="let y of years" value="{{y}}">{{y}}</option>
                         </select>
-                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedStartedAtYear" [(ngModel)]="theUserExpItem.started_at_year">
                             <option selected>Yıl</option>
                             <!-- <option *ngIf="isEditExp" [selected]="selectedStartedAtYear"> </option> -->
-                            <option ngDefaultControl name="say1" *ngFor="let y of years" [ngValue]="selectedStartedAtYear">{{y}}</option> 
+                            <option ngDefaultControl name="say1" *ngFor="let y of years" value="{{y}}">{{y}}</option>
                         </select>
                     </div>
                 </div>
@@ -326,38 +362,43 @@
                 <span class="span-form">Bitiş Tarihi</span>
                 <div class="d-flex">
                     <div class="month d-flex">
-                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newExpAttr.new_ended_at_month">
                             <option selected>Ay</option>
                             <!-- <option *ngIf="isEditExp" selected> </option> -->
-                            <option *ngFor="let m of months" ngDefaultControl name="eam" value="m" [ngValue]="newExpAttr.new_ended_at_month" >{{m}}</option>
+                            <option *ngFor="let m of months" ngDefaultControl name="eam" value="{{m}}">{{m}}</option>
                         </select>
-                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedEndedAtMonth" [(ngModel)]="theUserExpItem.ended_at_month">
                             <!-- <option *ngIf="isEditExp" selected> </option> -->
                             <option selected>Ay</option>
-                            <option ngDefaultControl name="eam1" *ngFor="let m of months" [(ngModel)]="selectedEndedAtMonth">{{m}}</option>
+                            <option ngDefaultControl name="eam1" *ngFor="let m of months" value="{{m}}">{{m}}</option>
                         </select>
                     </div>
                     <div class="year d-flex">
-                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="!isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newExpAttr.new_ended_at_year">
                             <option selected>Yıl</option>
-                    
-                            <option ngDefaultControl name="eay" *ngFor="let y of years" [ngValue]="newExpAttr.new_ended_at_year">{{y}}</option> 
+
+                            <option ngDefaultControl name="eay" *ngFor="let y of years" value="{{y}}">{{y}}</option>
                         </select>
-                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01">
+                        <select *ngIf="isEditExp" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedEndedAtYear" [(ngModel)]="theUserExpItem.ended_at_year">
                             <option selected>Yıl</option>
                             <!-- <option *ngIf="isEditExp" [selected]="selectedStartedAtYear"> </option> -->
-                            <option ngDefaultControl name="eay1" *ngFor="let y of years" [ngValue]="selectedEndedAtYear">{{y}}</option> 
+                            <option ngDefaultControl name="eay1" *ngFor="let y of years" value="{{y}}">{{y}}</option>
                         </select>
                     </div>
                 </div>
-                
+
             </div>
 
 
         </div>
         <div class="modal-footer d-flex">
-            <button *ngIf="isEditExp" class="del-exp-btn">Deneyimi Sil</button>
-            <button *ngIf="!isEditExp" class="btn btn-primary" (click)="modal.dismiss('Cross click'); createNewExp()">Kaydet</button>
+            <button *ngIf="isEditExp" class="del-exp-btn" (click)="deleteExperience(theUserExpItem)">Deneyimi Sil</button>
+            <button *ngIf="!isEditExp" class="btn btn-primary"
+                (click)="modal.dismiss('Cross click'); createNewExp()">Kaydet</button>
             <button *ngIf="isEditExp" class="btn btn-primary" (click)="modal.dismiss('Cross click');">Güncelle</button>
             <!-- <button type="button" class="btn btn-danger closeBtn" #closeBtn data-dismiss="modal"
                 (click)="modal.dismiss('Cross click'); cancelExpModal()">Vazgeç</button> -->
@@ -367,48 +408,114 @@
 
 
 <ng-template #modalEducation let-modal>
-    <div class="modal-header">
-        <h6 *ngIf="!isEditEduc" class="modal-title" id="modal-basic-title">Eğitim Ekle</h6>
-        <h6 *ngIf="isEditEduc" class="modal-title" id="modal-basic-title">Eğitimi Düzenle</h6>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); cancel();"
-            style="border: none;">
-            <span aria-hidden="true" style="border-radius: 50%; border: none;">×</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="input-group input-group-sm mb-3">
-            <span class="span-form" style="margin-right: 50px;">Ad Soyad: </span>
-            <input *ngIf="!isEditEduc" class="inp-form" type="text" name="name" id="" [(ngModel)]="name">
-            <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id="" [(ngModel)]="name">
+    <div class="modal-education">
+        <div class="modal-header">
+            <h6 *ngIf="!isEditEduc" class="modal-title" id="modal-basic-title">Eğitim Ekle</h6>
+            <h6 *ngIf="isEditEduc" class="modal-title" id="modal-basic-title">Eğitimi Düzenle</h6>
+            <button type="button" class="close" aria-label="Close"
+                (click)="modal.dismiss('Cross click'); cancelEducModal(theUserEducItem);" style="border: none;">
+                <span aria-hidden="true" style="border-radius: 50%; border: none;">×</span>
+            </button>
         </div>
-        <div class="input-group input-group-sm mb-3 d-block">
-            <span class="span-form" style="margin-right: 100px;">Okul: </span>
-            <input *ngIf="!isEditEduc" class="inp-form" type="text" name="school" id="" [(ngModel)]="school">
-            <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id="" [(ngModel)]="name">
-        </div>
-        <div class="input-group input-group-sm mb-3 d-block">
-            <span class="span-form" style="margin-right: 75px;">Meslek: </span>
-            <input *ngIf="!isEditEduc" class="inp-form" type="text" name="profession" id="" [(ngModel)]="profession">
-            <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id="" [(ngModel)]="name">
-        </div>
-        <div class="input-group input-group-sm mb-3 d-block">
-            <span class="span-form" style="margin-right: 93px;">Şehir: </span>
-            <input *ngIf="!isEditEduc" class="inp-form" type="text" name="location_city" id=""
-                [(ngModel)]="location_city">
-            <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id="" [(ngModel)]="name">
-        </div>
-        <div class="input-group input-group-sm mb-3 d-block">
-            <span class="span-form" style="margin-right: 100px;">Ülke: </span>
-            <input *ngIf="!isEditEduc" class="inp-form" type="text" name="location_nation" id=""
-                [(ngModel)]="location_nation">
-            <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id="" [(ngModel)]="name">
-        </div>
+        <div class="modal-body">
+            <div class="input-group input-group-sm mb-3 d-block">
+                <span class="span-form">Okul </span>
+                <input *ngIf="!isEditEduc" class="inp-form" type="text" name="name" id=""
+                    [(ngModel)]="newEducAttr.new_school_name">
+                <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id=""
+                    [(ngModel)]="theUserEducItem.school_name">
+            </div>
+            <div class="input-group input-group-sm mb-3 d-block">
+                <span class="span-form">Derece </span>
+                <input *ngIf="!isEditEduc" class="inp-form" type="text" name="name" id=""
+                    [(ngModel)]="newEducAttr.new_degree">
+                <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id=""
+                    [(ngModel)]="theUserEducItem.degree">
+            </div>
+            <div class="input-group input-group-sm mb-3 d-block">
+                <span class="span-form" style="margin-right: 75px;">Bölüm </span>
+                <input *ngIf="!isEditEduc" class="inp-form" type="text" name="profession" id=""
+                    [(ngModel)]="newEducAttr.new_departman">
+                <input *ngIf="isEditEduc" class="inp-form" type="text" name="name" id=""
+                    [(ngModel)]="theUserEducItem.departman">
+            </div>
+            <div class="input-group input-group-sm year-month d-block mb-3">
+                <span class="span-form d-block">Başlangıç Tarihi</span>
+                <div class="d-flex">
+                    <div class="month d-flex">
+                        <select *ngIf="!isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newEducAttr.new_started_at_month">
+                            <option selected>Ay</option>
+                            <!-- <option *ngIf="isEditExp" selected> </option> -->
+                            <option *ngFor="let m of months" name="samed" ngDeafultControl value="{{m}}">{{m}}</option>
+                        </select>
+                        <select *ngIf="isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedStartedAtMonth_ed" [(ngModel)]="theUserEducItem.started_at_month">
+                            <!-- <option *ngIf="isEditExp" selected> </option> -->
+                            <option selected>Ay</option>
+                            <option ngDefaultControl name="sam1ed" *ngFor="let m of months" value="{{m}}">{{m}}</option>
+                        </select>
+                    </div>
+                    <div class="year d-flex">
+                        <select *ngIf="!isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newEducAttr.new_started_at_year">
+                            <option selected>Yıl</option>
+                            <option *ngIf="isEditEduc" selected> </option>
+                            <option ngDefaultControl name="sayed" *ngFor="let y of years" value="{{y}}">{{y}}</option>
+                        </select>
+                        <select *ngIf="isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedStartedAtYear_ed" [(ngModel)]="theUserEducItem.started_at_year">
+                            <option selected>Yıl</option>
+                            <!-- <option *ngIf="isEditExp" [selected]="selectedStartedAtYear"> </option> -->
+                            <option ngDefaultControl name="say1ed" *ngFor="let y of years" value="{{y}}">{{y}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group input-group-sm year-month d-block mb-3">
+                <span class="span-form">Bitiş Tarihi</span>
+                <div class="d-flex">
+                    <div class="month d-flex">
+                        <select *ngIf="!isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newEducAttr.new_ended_at_month">
+                            <option selected>Ay</option>
+                            <!-- <option *ngIf="isEditExp" selected> </option> -->
+                            <option *ngFor="let m of months" ngDefaultControl name="eamed" value="{{m}}">{{m}}</option>
+                        </select>
+                        <select *ngIf="isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedEndedAtMonth_ed" [(ngModel)]="theUserEducItem.ended_at_month">
+                            <!-- <option *ngIf="isEditExp" selected> </option> -->
+                            <option selected>Ay</option>
+                            <option ngDefaultControl name="eam1ed" *ngFor="let m of months" value="{{m}}">{{m}}</option>
+                        </select>
+                    </div>
+                    <div class="year d-flex">
+                        <select *ngIf="!isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [(ngModel)]="newEducAttr.new_ended_at_year">
+                            <option selected>Yıl</option>
+
+                            <option ngDefaultControl name="eayed" *ngFor="let y of years" value="{{y}}">{{y}}</option>
+                        </select>
+                        <select *ngIf="isEditEduc" class="custom-select" id="inputGroupSelect01"
+                            [value]="selectedEndedAtYear_ed" [(ngModel)]="theUserEducItem.ended_at_year">
+                            <option selected>Yıl</option>
+                            <!-- <option *ngIf="isEditExp" [selected]="selectedStartedAtYear"> </option> -->
+                            <option ngDefaultControl name="eay1ed" *ngFor="let y of years" value="{{y}}">{{y}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
 
 
+        </div>
+        <div class="modal-footer d-flex">
+            <button *ngIf="isEditEduc" class="del-exp-btn" (click)="deleteEducation(theUserEducItem)">Eğitimi Sil</button>
+            <button *ngIf="!isEditEduc" class="btn btn-primary"
+                (click)="modal.dismiss('Cross click'); createNewEduc()">Kaydet</button>
+            <button *ngIf="isEditEduc" class="btn btn-primary" (click)="modal.dismiss('Cross click');">Güncelle</button>
+        
+        </div>
     </div>
-    <div class="modal-footer d-flex">
-        <button class="btn btn-primary" (click)="modal.dismiss('Cross click');">Güncelle</button>
-        <button type="button" class="btn btn-danger closeBtn" #closeBtn data-dismiss="modal"
-            (click)="modal.dismiss('Cross click'); cancel()">Vazgeç</button>
-    </div>
+
 </ng-template>

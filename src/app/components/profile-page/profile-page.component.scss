@@ -342,29 +342,27 @@
     }
 }
 .education-card {
-
     border-radius: 0 0 10px 10px;
-
     .card-header {
         background-color: white;
         border-bottom: 0;
         position: relative;
-
         .btn-svg {
             position: absolute;
             top: 20px;
             right: 20px;
             svg {
-            
+         
             }
-            
+         
         }
-        
+     
     }
     .card-body {
         padding-top: 1px;
-        .company-content {
+        .school-content {
             display: flex;
+            position: relative;
             .logo {
                 position: relative;
                 svg {
@@ -389,7 +387,7 @@
                         font-size: 16px;
                         font-weight: 600;
                     }
-                    .company-typeOfEmp {
+                    .degree-departman {
                         font-size: 14px;
                         font-weight: 400;
                     }
@@ -398,10 +396,18 @@
                         font-weight: 400;
                         color: gray;
                     }
-                    
+                 
                 }
             }
-            
+            button {
+                position: absolute;
+                top: 10px;
+                right: 0px;
+                border-radius: 50%;
+                svg {                   
+                }
+            }
+         
         }
     }
 }
@@ -430,7 +436,7 @@ svg {
     transition: all 0.5s ease 0s;
 }
 
-.modal-experience {
+.modal-experience, .modal-education {
 
     .modal-header {
 

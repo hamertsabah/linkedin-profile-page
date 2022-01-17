@@ -5,6 +5,7 @@ export class UserModel {
     location_city?: string;
     location_nation?: string;
     experiences?: UserExperiences[];
+    educations?: UserEducations[];
     ppBase64?: string;  //Base64'e dönüştürülmüş profil resmi stringi
 }
 
@@ -15,6 +16,16 @@ export class UserExperiences {
     company_name?: string;
     co_location_city?: string;
     co_location_nation?: string;
+    started_at_year?: string;
+    started_at_month?: string;
+    ended_at_year?: string;
+    ended_at_month?: string;
+}
+export class UserEducations {
+    id?: number;
+    school_name?: string;
+    degree?: string;
+    departman?: string;
     started_at_year?: string;
     started_at_month?: string;
     ended_at_year?: string;
